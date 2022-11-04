@@ -2,9 +2,9 @@ import clientPromise from "../lib/mongodb";
 
 export default function Home({ times }) {
     return (
-        <div>
-            <h1>All Times</h1>
-            <ul>
+        <div className='flex flex-col items-center gap-4 mt-3'>
+            <h1 className='text-3xl text-white'>All Times</h1>
+            <ul className='border-2 border-slate-800 rounded-md p-1'>
                 {times.map((times) => (
                     <li key={times._id}>
                         <h2>{times.time.$numberDecimal}</h2>
