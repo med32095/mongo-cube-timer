@@ -1,4 +1,4 @@
-import clientPromise from "../lib/mongoDB.js"
+import clientPromise from "../lib/mongodb.js"
 
 export default function Home({ times }) {
     return (
