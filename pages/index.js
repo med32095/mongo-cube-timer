@@ -23,7 +23,6 @@ export async function getServerSideProps() {
         const times = await db
             .collection("times")
             .find({})
-            .limit(20)
             .toArray();
 
         return {
