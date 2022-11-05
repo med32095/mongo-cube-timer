@@ -6,6 +6,7 @@ export default function Home({ times }) {
     const [time, setTime] = useState(null)
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
+    const [deleting, setDeleting] = useState(false);
     const router = useRouter();
 
     const insertTime = async (e) => {
@@ -42,6 +43,31 @@ export default function Home({ times }) {
             return setError(data.message);
         }
         };
+
+    const deleteTime = async (timeID) => {
+        //change deleting state
+        setDeleting(true);
+
+        try {
+            // Delete time
+            let res = await fetch('/api/delete', {
+                method: 'DELETE',
+                body: timeID,
+            });
+            
+            let data = await res.json();
+
+            // reset the deleting state
+            setDeleting(false);
+            setMessage('time deleted')
+
+            // reload the page
+            return router.push(router.asPath);
+        } catch (error) {
+            // stop deleting state
+            return setDeleting(false);
+        }
+    };
     
     useEffect(() => {
         router.push(router.asPath)
@@ -59,10 +85,13 @@ export default function Home({ times }) {
                     <button type="submit" className='bg-slate-600 text-white rounded py-1 px-2'>SUBMIT</button>
                 </form>
             </div>
-            <ul className='border-2 border-slate-600 rounded-md p-1'>
+            <ul className='p-1 gap-2 flex flex-col'>
                 {times.map((times) => (
-                    <li key={times._id}>
+                    <li key={times._id} className='flex gap-3 justify-between bg-slate-400 rounded px-3'>
                         <h2>{times.time}</h2>
+                        <button onClick={() => deleteTime(times._id)} className='text-white'>
+                            x
+                        </button>
                     </li>
                 ))}
             </ul>
