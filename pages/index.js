@@ -78,7 +78,7 @@ export default function Home({ times }) {
             <h1 className='text-6xl text-slate-800'>cube timer</h1>
             <div>
                 <form onSubmit={insertTime} className='flex flex-col items-center gap-2'>
-                    <input className='rounded w-36' inputMode="numeric" type="float" onChange={(e) => setTime(e.target.value)}/>
+                    <input className='rounded w-36' inputMode="decimal" type="float" onChange={(e) => setTime(e.target.value)}/>
                     <div>{time}</div>
                     <div>{message}</div>
                     <div>{error}</div>
