@@ -1,5 +1,5 @@
 import clientPromise from "../lib/mongodb.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Stopwatch from "../components/stopwatch";
 
@@ -9,6 +9,7 @@ export default function Home({ times }) {
     const [message, setMessage] = useState('');
     const [deleting, setDeleting] = useState(false);
     const router = useRouter();
+    const textInput = useRef(null);
 
     const insertTime = async (e) => {
         e.preventDefault();
@@ -36,7 +37,8 @@ export default function Home({ times }) {
 
         if (data.success) {
             // reset the fields
-            setTime(null); // why won't this work?
+            setTime(''); // why won't this work? the form input sets time, not the other way around
+            textInput.current.reset() // this worked
             console.log('hello')
             // set the message
             return setMessage(data.message);
@@ -80,7 +82,7 @@ export default function Home({ times }) {
             <h1 className='text-6xl text-slate-800'>cube timer</h1>
             <Stopwatch/>
             <div>
-                <form onSubmit={insertTime} className='flex flex-col items-center gap-2'>
+                <form onSubmit={insertTime} ref={textInput} className='flex flex-col items-center gap-2'>
                     <input className='rounded w-36' required inputMode="decimal" type="float" onChange={(e) => setTime(e.target.value)}/>
                     <div>{time}</div>
                     <div>{message}</div>
