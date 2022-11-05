@@ -75,7 +75,7 @@ export default function Home({ times }) {
 
     return (
         <div className='flex flex-col items-center gap-4 mt-3'>
-            <h1 className='text-6xl text-slate-800'>All Times</h1>
+            <h1 className='text-6xl text-slate-800'>cube timer</h1>
             <div>
                 <form onSubmit={insertTime} className='flex flex-col items-center gap-2'>
                     <input className='rounded w-36' onChange={(e) => setTime(e.target.value)}/>
@@ -85,7 +85,8 @@ export default function Home({ times }) {
                     <button type="submit" className='bg-slate-600 text-white rounded py-1 px-2'>SUBMIT</button>
                 </form>
             </div>
-            <ul className='p-1 gap-2 flex flex-col w-36'>
+            {/* flex col reverse used to cheat reverse instead of implementing "createdat" in db */}
+            <ul className='p-1 gap-2 flex flex-col-reverse w-36'>
                 {times.map((times) => (
                     <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
                         <h2>{times.time}</h2>
