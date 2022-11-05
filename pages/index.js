@@ -78,14 +78,14 @@ export default function Home({ times }) {
             <h1 className='text-6xl text-slate-800'>All Times</h1>
             <div>
                 <form onSubmit={insertTime} className='flex flex-col items-center gap-2'>
-                    <input className='rounded' onChange={(e) => setTime(e.target.value)}/>
+                    <input className='rounded w-36' onChange={(e) => setTime(e.target.value)}/>
                     <div>{time}</div>
                     <div>{message}</div>
                     <div>{error}</div>
                     <button type="submit" className='bg-slate-600 text-white rounded py-1 px-2'>SUBMIT</button>
                 </form>
             </div>
-            <ul className='p-1 gap-2 flex flex-col'>
+            <ul className='p-1 gap-2 flex flex-col w-36'>
                 {times.map((times) => (
                     <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
                         <h2>{times.time}</h2>
