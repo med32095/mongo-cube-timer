@@ -19,13 +19,10 @@ export default function Home({ times }) {
         setMessage('');
 
         // fields check.
-        if (!time) return setError('All fields are required');
-        console.log(typeof time)
-        console.log(parseFloat(time))
+        // if (!time) return setError('All fields are required');
 
         if (isNaN(parseFloat(time))) {
-            console.log('here')
-            return setError('enter a number')
+            return setError('not a number')
         }
 
         // entry structure
@@ -44,7 +41,7 @@ export default function Home({ times }) {
 
         if (data.success) {
             // reset the fields
-            setTime(''); // why won't this work? the form input sets time, not the other way around
+            // setTime(null); // why won't this work? the form input sets time, not the other way around
             textInput.current.reset() // this worked
             
             // set the message
@@ -80,20 +77,22 @@ export default function Home({ times }) {
         }
     };
     
-    useEffect(() => {
-        router.push(router.asPath)
-    }, [message])
+    // useEffect(() => {
+    //     router.push(router.asPath)
+    // }, [message])
 
     return (
         <div className='flex flex-col items-center gap-4 mt-3'>
+            <div className='absolute top-1 left-1'>
+                <div>time: {time}</div>
+                <div>message: {message}</div>
+                <div>error: {error}</div>
+            </div>
             <h1 className='text-6xl text-slate-800'>cube timer</h1>
             <Stopwatch/>
             <div>
                 <form onSubmit={insertTime} ref={textInput} className='flex flex-col items-center gap-2'>
                     <input className='rounded w-36' required inputMode="decimal" onChange={(e) => setTime(e.target.value)}/>
-                    <div>time: {time}</div>
-                    <div>message: {message}</div>
-                    <div>error: {error}</div>
                     <button type="submit" className='bg-slate-600 text-white rounded py-1 px-2'>SUBMIT</button>
                 </form>
             </div>
