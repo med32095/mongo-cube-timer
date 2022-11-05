@@ -1,6 +1,7 @@
-import clientPromise from "../lib/mongodb.js"
+import clientPromise from "../lib/mongodb.js";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Stopwatch from "../components/stopwatch";
 
 export default function Home({ times }) {
     const [time, setTime] = useState(null)
@@ -35,7 +36,8 @@ export default function Home({ times }) {
 
         if (data.success) {
             // reset the fields
-            setTime('');
+            setTime(null); // why won't this work?
+            console.log('hello')
             // set the message
             return setMessage(data.message);
         } else {
@@ -76,9 +78,10 @@ export default function Home({ times }) {
     return (
         <div className='flex flex-col items-center gap-4 mt-3'>
             <h1 className='text-6xl text-slate-800'>cube timer</h1>
+            <Stopwatch/>
             <div>
                 <form onSubmit={insertTime} className='flex flex-col items-center gap-2'>
-                    <input className='rounded w-36' inputMode="decimal" type="float" onChange={(e) => setTime(e.target.value)}/>
+                    <input className='rounded w-36' required inputMode="decimal" type="float" onChange={(e) => setTime(e.target.value)}/>
                     <div>{time}</div>
                     <div>{message}</div>
                     <div>{error}</div>
@@ -91,7 +94,7 @@ export default function Home({ times }) {
                     <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
                         <h2>{times.time}</h2>
                         <button onClick={() => deleteTime(times._id)} className='text-white hidden group-hover:flex'>
-                            x
+                            {deleting ? "..." : "x"}
                         </button>
                     </li>
                 ))}
