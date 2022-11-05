@@ -18,12 +18,12 @@ export default function Home({ times }) {
         setError('');
         setMessage('');
 
-        // fields check. form validation???????
+        // fields check.
         if (!time) return setError('All fields are required');
 
         // entry structure
         let entry = {
-            time: parseFloat(time),
+            time: String(time),
             //createdAt: new Date().toISOString(),
         };
         // save the time
@@ -39,7 +39,7 @@ export default function Home({ times }) {
             // reset the fields
             setTime(''); // why won't this work? the form input sets time, not the other way around
             textInput.current.reset() // this worked
-            console.log('hello')
+            
             // set the message
             return setMessage(data.message);
         } else {
@@ -83,7 +83,7 @@ export default function Home({ times }) {
             <Stopwatch/>
             <div>
                 <form onSubmit={insertTime} ref={textInput} className='flex flex-col items-center gap-2'>
-                    <input className='rounded w-36' required inputMode="decimal" type="float" onChange={(e) => setTime(e.target.value)}/>
+                    <input className='rounded w-36' required inputMode="decimal" onChange={(e) => setTime(e.target.value)}/>
                     <div>{time}</div>
                     <div>{message}</div>
                     <div>{error}</div>
