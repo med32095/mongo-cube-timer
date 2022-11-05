@@ -42,6 +42,7 @@ export default function Home({ times }) {
         if (data.success) {
             // reset the fields
             // setTime(null); // why won't this work? the form input sets time, not the other way around
+            router.push(router.asPath);
             textInput.current.reset() // this worked
             
             // set the message
@@ -76,10 +77,6 @@ export default function Home({ times }) {
             return setDeleting(false);
         }
     };
-    
-    // useEffect(() => {
-    //     router.push(router.asPath)
-    // }, [message])
 
     return (
         <div className='flex flex-col items-center gap-4 mt-3'>
