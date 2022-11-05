@@ -59,7 +59,7 @@ export default function Home({ times }) {
 
             // reset the deleting state
             setDeleting(false);
-            setMessage('time deleted')
+            // setMessage('time deleted') **** throws a weird error
 
             // reload the page
             return router.push(router.asPath);
