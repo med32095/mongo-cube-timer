@@ -20,6 +20,13 @@ export default function Home({ times }) {
 
         // fields check.
         if (!time) return setError('All fields are required');
+        console.log(typeof time)
+        console.log(parseFloat(time))
+
+        if (isNaN(parseFloat(time))) {
+            console.log('here')
+            return setError('enter a number')
+        }
 
         // entry structure
         let entry = {
@@ -84,9 +91,9 @@ export default function Home({ times }) {
             <div>
                 <form onSubmit={insertTime} ref={textInput} className='flex flex-col items-center gap-2'>
                     <input className='rounded w-36' required inputMode="decimal" onChange={(e) => setTime(e.target.value)}/>
-                    <div>{time}</div>
-                    <div>{message}</div>
-                    <div>{error}</div>
+                    <div>time: {time}</div>
+                    <div>message: {message}</div>
+                    <div>error: {error}</div>
                     <button type="submit" className='bg-slate-600 text-white rounded py-1 px-2'>SUBMIT</button>
                 </form>
             </div>
