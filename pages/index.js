@@ -1,12 +1,14 @@
 import clientPromise from "../lib/mongodb.js"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function Home({ times }) {
     const [time, setTime] = useState(null)
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
+    const router = useRouter();
 
-     const insertTime = async (e) => {
+    const insertTime = async (e) => {
         e.preventDefault();
 
         // reset error and message
@@ -40,7 +42,10 @@ export default function Home({ times }) {
             return setError(data.message);
         }
         };
-
+    
+    useEffect(() => {
+        router.push(router.asPath)
+    }, [message])
 
     return (
         <div className='flex flex-col items-center gap-4 mt-3'>
