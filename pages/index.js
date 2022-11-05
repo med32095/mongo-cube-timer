@@ -87,9 +87,9 @@ export default function Home({ times }) {
             </div>
             <ul className='p-1 gap-2 flex flex-col'>
                 {times.map((times) => (
-                    <li key={times._id} className='flex gap-3 justify-between bg-slate-400 rounded px-3'>
+                    <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
                         <h2>{times.time}</h2>
-                        <button onClick={() => deleteTime(times._id)} className='text-white'>
+                        <button onClick={() => deleteTime(times._id)} className='text-white hidden group-hover:flex'>
                             x
                         </button>
                     </li>
