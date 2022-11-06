@@ -35,10 +35,17 @@ export default function Stopwatch() {
         setReadout(toReadout(min,sec,hs));
     }
 
-    function toReadout(min,sec,ms) {
+    function toReadout(min,sec,hs) {
         let _min = String(min)
         let _sec = String(sec)
         let _hs = String(hs)
+
+        if (sec <= 9) {
+            _sec = `0${sec}`
+        }
+        if (hs <= 9) {
+            _hs = `0${hs}`
+        }
 
         return `${_min}:${_sec}.${_hs}`
     }
