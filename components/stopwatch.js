@@ -55,7 +55,6 @@ export default function Stopwatch() {
             <div className='text-5xl text-slate-800'>
                 {readout}
             </div>
-            <div>{status}</div>
             <button onClick={handleClick} className='bg-slate-600 rounded px-2 text-white w-full hover:bg-slate-800'>
                 START
             </button>
