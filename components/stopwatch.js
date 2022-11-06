@@ -1,46 +1,33 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function Stopwatch() {
     const [time, setTime] = useState(0);
-    const [status, setStatus] = useState("zero");
-    // const [min, setMin] = useState(0);
-    // const [sec, setSec] = useState(0);
-    // const [ms, setMs] = useState(0);
+    const [status, setStatus] = useState(false);
     const [readout, setReadout] = useState("0:00.000");
+    const [int, setInt] = useState(null);
     let ms = 0
     let sec = 0
     let min = 0
 
-    let interval = null;
-
     function handleClick() {
-        if (interval === null) {
-            interval = setInterval(startTimer, 1);
-        }
-        if (interval !== null) {
-            console.log('stopped')
-            interval = null;
-            clearInterval(interval)
-            ms = 0;
+        if (status) {
+            clearInterval(int)
+            setStatus(false)
+        } else {
+            setStatus(true)
+            setInt(setInterval(startTimer, 1))
+            min = 0;
             sec = 0;
-            min = 0
-            setStatus("zero")
+            ms = 0;
         }
     }
 
     function startTimer() {
-        // setMs(ms+1);
-
-        console.log(sec)
         ms++;
         if (ms>999) {
-            // setMs(0)
-            // setSec(sec+1)
             ms = 0;
             sec++;
             if (sec>59) {
-                // setSec(0)
-                // setMin(min+1)
                 sec = 0;
                 min++;
             }
@@ -55,6 +42,10 @@ export default function Stopwatch() {
 
         return `${_min}:${_sec}.${_ms}`
     }
+
+    useEffect( () => {
+        console.log(status);
+    }, [status]);
 
     return (
         <div className='flex flex-col gap-4 justify-between items-center border-4 border-slate-600 rounded-md p-4'>
