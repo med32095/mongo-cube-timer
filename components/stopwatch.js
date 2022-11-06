@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 export default function Stopwatch() {
     const [time, setTime] = useState(0);
@@ -52,7 +52,7 @@ export default function Stopwatch() {
 
     return (
         <div className='flex flex-col gap-4 justify-between items-center border-4 border-slate-600 rounded-md p-4'>
-            <div className='text-5xl text-slate-800'>
+            <div className='text-5xl text-slate-800 font-mono'>
                 {readout}
             </div>
             <button onClick={handleClick} className='bg-slate-600 rounded px-2 text-white w-full hover:bg-slate-800'>
