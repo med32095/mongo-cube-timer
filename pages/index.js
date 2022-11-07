@@ -78,7 +78,7 @@ export default function Home({ times }) {
             <ul className='p-1 gap-2 flex flex-col w-36'>
                 {times.map((times) => (
                     <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
-                        <h2>{times.prettyTime}</h2>
+                        <h2 className='font-mono'>{times.prettyTime}</h2>
                         <button onClick={() => deleteTime(times._id)} className='text-white hidden group-hover:flex'>
                             {deleting ? "..." : "x"}
                         </button>
