@@ -4,13 +4,15 @@ import { useRouter } from "next/router";
 import Stopwatch from "../components/stopwatch";
 import Chart from "../components/chart.js";
 
+import { useSession, signIn, signOut } from "next-auth/react"
 
-export default function Home({ times }) {
+export default function Component({ times }) {
     const [time, setTime] = useState(null)
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
     const [deleting, setDeleting] = useState(false);
     const router = useRouter();
+    const { data: session } = useSession()
 
     const insertTime = async (elapse,readout) => {
         // reset error and message
@@ -68,27 +70,38 @@ export default function Home({ times }) {
         }
     };
 
-    return (
-        <div className='flex justify-around gap-4 mt-3 sm:flex-col align-middle'>
-            <div className='self-center'>
-                <Chart times={times} />
+    if(session) {
+        return (
+            <div className='flex justify-around gap-4 mt-3 sm:flex-col align-middle'>
+                <div className='self-center'>
+                    <Chart times={times} />
+                </div>
+                <div className='flex flex-col items-center gap-4 mt-3'>
+                    <h1 className='text-7xl text-slate-800'>cube timer</h1>
+                    <Stopwatch inserter={insertTime}/>
+                    <ul className='p-1 gap-2 flex flex-col-reverse w-36'>
+                        {times.map((times) => (
+                            <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
+                                <h2 className='font-mono'>{times.prettyTime}</h2>
+                                <button onClick={() => deleteTime(times._id)} className='text-white hidden group-hover:flex sm:flex'>
+                                    {deleting ? "..." : "x"}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div>
+                    <p>Signed in as {session.user.email} </p>
+                    <button onClick={() => signOut()}>Sign out</button>
+                </div>
             </div>
-            <div className='flex flex-col items-center gap-4 mt-3'>
-                <h1 className='text-7xl text-slate-800'>cube timer</h1>
-                <Stopwatch inserter={insertTime}/>
-                <ul className='p-1 gap-2 flex flex-col-reverse w-36'>
-                    {times.map((times) => (
-                        <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
-                            <h2 className='font-mono'>{times.prettyTime}</h2>
-                            <button onClick={() => deleteTime(times._id)} className='text-white hidden group-hover:flex sm:flex'>
-                                {deleting ? "..." : "x"}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
-    );
+        )
+        
+    }
+    return <>
+        <p>not signed in</p>
+        <button onClick={() => signIn()}>Sign in</button>
+    </>
 }
 
 export async function getServerSideProps() {
