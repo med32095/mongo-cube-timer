@@ -57,7 +57,7 @@ export default function Stopwatch({ inserter }) {
                 {newReadout}
             </div>
             <button onClick={newHandleClick} className='bg-slate-600 rounded px-2 text-white w-full hover:bg-slate-800'>
-                start
+                {newStatus ? "stop" : "start"}
             </button>
         </div>
     )

@@ -1,5 +1,5 @@
 import clientPromise from "../lib/mongodb.js";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Stopwatch from "../components/stopwatch";
 
@@ -9,12 +9,6 @@ export default function Home({ times }) {
     const [message, setMessage] = useState('');
     const [deleting, setDeleting] = useState(false);
     const router = useRouter();
-    const textInput = useRef(null);
-
-    // function receiveTime(time) {
-    //     console.log(time)
-    //     setTime(time);
-    // }
 
     const insertTime = async (elapse,readout) => {
         // reset error and message
@@ -74,11 +68,11 @@ export default function Home({ times }) {
 
     return (
         <div className='flex flex-col items-center gap-4 mt-3'>
-            <div className='absolute top-1 left-1'>
+            {/* <div className='absolute top-1 left-1'>
                 <div>time: {time}</div>
                 <div>message: {message}</div>
                 <div>error: {error}</div>
-            </div>
+            </div> */}
             <h1 className='text-7xl text-slate-800'>cube timer</h1>
             <Stopwatch inserter={insertTime}/>
             <ul className='p-1 gap-2 flex flex-col w-36'>
