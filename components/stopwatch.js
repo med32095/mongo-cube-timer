@@ -22,23 +22,30 @@ export default function Stopwatch() {
         let currentTime = d.getTime()
         let startTime = myTime.getTime()
         let elapse = currentTime - startTime
-        console.log(elapse)
-        setNewReadout(String(elapse))
+        setNewReadout(toReadout(elapse))
     }
 
-    function toReadout(min,sec,hs) {
+    function toReadout(time) {
+        let min = Math.floor(time/60000)
+        let sec = Math.floor((time % 60000)/1000)
+        let ms = time % 1000
+
         let _min = String(min)
         let _sec = String(sec)
-        let _hs = String(hs)
+        let _ms = String(ms)
 
         if (sec <= 9) {
             _sec = `0${sec}`
         }
-        if (hs <= 9) {
-            _hs = `0${hs}`
+        if (ms <= 99) {
+            if (ms <= 9) {
+                _ms = `00${ms}`
+            } else {
+                _ms = `0${ms}`
+            }
         }
-
-        return `${_min}:${_sec}.${_hs}`
+        
+        return `${_min}:${_sec}.${_ms}`
     }
 
     return (
