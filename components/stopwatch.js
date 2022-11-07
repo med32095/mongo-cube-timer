@@ -56,7 +56,7 @@ export default function Stopwatch({ inserter }) {
             <div className='text-5xl text-slate-800 font-mono'>
                 {newReadout}
             </div>
-            <button onClick={newHandleClick} className='bg-slate-600 rounded px-2 text-white w-full hover:bg-slate-800 text-4xl flex justify-around py-4'>
+            <button onClick={newHandleClick} className='bg-slate-600 rounded px-2 text-white w-full hover:bg-slate-800 text-5xl flex justify-around py-6'>
                 {newStatus ? "stop" : "start"}
             </button>
         </div>
