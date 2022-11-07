@@ -2,7 +2,8 @@ import clientPromise from "../lib/mongodb.js";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Stopwatch from "../components/stopwatch";
-import { LineChart, Line, Tooltip } from 'recharts';
+import Chart from "../components/chart.js";
+
 
 export default function Home({ times }) {
     const [time, setTime] = useState(null)
@@ -68,30 +69,24 @@ export default function Home({ times }) {
     };
 
     return (
-        <div className='flex flex-col items-center gap-4 mt-3'>
-            {/* <div className='absolute top-1 left-1'>
-                <div>time: {time}</div>
-                <div>message: {message}</div>
-                <div>error: {error}</div>
-            </div> */}
-            <h1 className='text-7xl text-slate-800'>cube timer</h1>
-            <div className='absolute top-0 left-0 sm:hidden'>
-                <LineChart width={400} height={400} data={times}>
-                    <Line type="monotone" dataKey="time" stroke="#475569" strokeWidth="3" dot={{ fill: '#94a3b8', stroke: '#94a3b8', strokeWidth: 4 }}/>
-                    <Tooltip />
-                </LineChart>
+        <div className='flex justify-around gap-4 mt-3 sm:flex-col align-middle'>
+            <div className='self-center'>
+                <Chart times={times} />
             </div>
-            <Stopwatch inserter={insertTime}/>
-            <ul className='p-1 gap-2 flex flex-col-reverse w-36'>
-                {times.map((times) => (
-                    <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
-                        <h2 className='font-mono'>{times.prettyTime}</h2>
-                        <button onClick={() => deleteTime(times._id)} className='text-white hidden group-hover:flex sm:flex'>
-                            {deleting ? "..." : "x"}
-                        </button>
-                    </li>
-                ))}
-            </ul>
+            <div className='flex flex-col items-center gap-4 mt-3'>
+                <h1 className='text-7xl text-slate-800'>cube timer</h1>
+                <Stopwatch inserter={insertTime}/>
+                <ul className='p-1 gap-2 flex flex-col-reverse w-36'>
+                    {times.map((times) => (
+                        <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
+                            <h2 className='font-mono'>{times.prettyTime}</h2>
+                            <button onClick={() => deleteTime(times._id)} className='text-white hidden group-hover:flex sm:flex'>
+                                {deleting ? "..." : "x"}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 }
