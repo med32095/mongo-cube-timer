@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Stopwatch from "../components/stopwatch";
 import Chart from "../components/chart.js";
+import { ObjectID } from "bson";
 
 import { useSession, signIn, signOut } from "next-auth/react"
 
@@ -91,7 +92,7 @@ export default function Component({ times }) {
                     </ul>
                 </div>
                 <div>
-                    <p>Signed in as {session.user.email} </p>
+                    <p>{session.user.name} </p>
                     <button onClick={() => signOut()}>Sign out</button>
                 </div>
             </div>
