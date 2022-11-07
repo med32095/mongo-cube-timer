@@ -16,23 +16,15 @@ export default function Home({ times }) {
     //     setTime(time);
     // }
 
-    const insertTime = async (elapse) => {
-        //e.preventDefault();
-
+    const insertTime = async (elapse,readout) => {
         // reset error and message
         setError('');
         setMessage('');
 
-        // fields check.
-        // if (!time) return setError('All fields are required');
-
-        // if (isNaN(parseFloat(time))) {
-        //     return setError('not a number')
-        // }
-
         // entry structure
         let entry = {
-            time: String(elapse),
+            time: elapse,
+            prettyTime: readout,
             //createdAt: new Date().toISOString(),
         };
         // save the time
@@ -82,10 +74,6 @@ export default function Home({ times }) {
         }
     };
 
-    // useEffect(() => {
-    //     insertTime()
-    // }, [time])
-
     return (
         <div className='flex flex-col items-center gap-4 mt-3'>
             <div className='absolute top-1 left-1'>
@@ -99,7 +87,7 @@ export default function Home({ times }) {
             <ul className='p-1 gap-2 flex flex-col-reverse w-36'>
                 {times.map((times) => (
                     <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
-                        <h2>{times.time}</h2>
+                        <h2>{times.prettyTime}</h2>
                         <button onClick={() => deleteTime(times._id)} className='text-white hidden group-hover:flex'>
                             {deleting ? "..." : "x"}
                         </button>

@@ -11,7 +11,7 @@ export default function Stopwatch({ inserter }) {
         if (newStatus) {
             clearInterval(newInt)
             setNewStatus(false)
-            inserter(time)
+            inserter(time,newReadout)
         } else {
             setNewStatus(true)
             myTime = new Date()
