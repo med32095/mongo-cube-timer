@@ -11,8 +11,13 @@ export default function Home({ times }) {
     const router = useRouter();
     const textInput = useRef(null);
 
-    const insertTime = async (e) => {
-        e.preventDefault();
+    // function receiveTime(time) {
+    //     console.log(time)
+    //     setTime(time);
+    // }
+
+    const insertTime = async (elapse) => {
+        //e.preventDefault();
 
         // reset error and message
         setError('');
@@ -21,13 +26,13 @@ export default function Home({ times }) {
         // fields check.
         // if (!time) return setError('All fields are required');
 
-        if (isNaN(parseFloat(time))) {
-            return setError('not a number')
-        }
+        // if (isNaN(parseFloat(time))) {
+        //     return setError('not a number')
+        // }
 
         // entry structure
         let entry = {
-            time: String(time),
+            time: String(elapse),
             //createdAt: new Date().toISOString(),
         };
         // save the time
@@ -43,7 +48,6 @@ export default function Home({ times }) {
             // reset the fields
             // setTime(null); // why won't this work? the form input sets time, not the other way around
             router.push(router.asPath);
-            textInput.current.reset() // this worked
             
             // set the message
             return setMessage(data.message);
@@ -78,6 +82,10 @@ export default function Home({ times }) {
         }
     };
 
+    // useEffect(() => {
+    //     insertTime()
+    // }, [time])
+
     return (
         <div className='flex flex-col items-center gap-4 mt-3'>
             <div className='absolute top-1 left-1'>
@@ -86,13 +94,7 @@ export default function Home({ times }) {
                 <div>error: {error}</div>
             </div>
             <h1 className='text-7xl text-slate-800'>cube timer</h1>
-            <Stopwatch/>
-            <div>
-                <form onSubmit={insertTime} ref={textInput} className='flex flex-col items-center gap-2'>
-                    <input className='rounded w-36' required inputMode="decimal" onChange={(e) => setTime(e.target.value)}/>
-                    <button type="submit" className='bg-slate-600 text-white rounded py-1 px-2'>SUBMIT</button>
-                </form>
-            </div>
+            <Stopwatch inserter={insertTime}/>
             {/* flex col reverse used to cheat reverse instead of implementing "createdat" in db */}
             <ul className='p-1 gap-2 flex flex-col-reverse w-36'>
                 {times.map((times) => (

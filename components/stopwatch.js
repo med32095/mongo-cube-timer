@@ -1,15 +1,17 @@
 import { useState } from "react"
 
-export default function Stopwatch() {
+export default function Stopwatch({ inserter }) {
     const [newReadout, setNewReadout] = useState("0:00.000");
     const [newInt, setNewInt] = useState(null);
     const [newStatus, setNewStatus] = useState(false);
+    const [time, setTime] = useState(0);
     let myTime;
 
     function newHandleClick() {
         if (newStatus) {
             clearInterval(newInt)
             setNewStatus(false)
+            inserter(time)
         } else {
             setNewStatus(true)
             myTime = new Date()
@@ -23,6 +25,7 @@ export default function Stopwatch() {
         let startTime = myTime.getTime()
         let elapse = currentTime - startTime
         setNewReadout(toReadout(elapse))
+        setTime(elapse)
     }
 
     function toReadout(time) {
