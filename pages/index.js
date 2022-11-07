@@ -25,7 +25,7 @@ export default function Home({ times }) {
         let entry = {
             time: elapse,
             prettyTime: readout,
-            //createdAt: new Date().toISOString(),
+            createdAt: new Date().toISOString(),
         };
         // save the time
         let response = await fetch('/api/insert', {
@@ -38,7 +38,6 @@ export default function Home({ times }) {
 
         if (data.success) {
             // reset the fields
-            // setTime(null); // why won't this work? the form input sets time, not the other way around
             router.push(router.asPath);
             
             // set the message
@@ -64,7 +63,6 @@ export default function Home({ times }) {
 
             // reset the deleting state
             setDeleting(false);
-            // setMessage('time deleted') **** throws a weird error
 
             // reload the page
             return router.push(router.asPath);
@@ -83,8 +81,7 @@ export default function Home({ times }) {
             </div>
             <h1 className='text-7xl text-slate-800'>cube timer</h1>
             <Stopwatch inserter={insertTime}/>
-            {/* flex col reverse used to cheat reverse instead of implementing "createdat" in db */}
-            <ul className='p-1 gap-2 flex flex-col-reverse w-36'>
+            <ul className='p-1 gap-2 flex flex-col w-36'>
                 {times.map((times) => (
                     <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
                         <h2>{times.prettyTime}</h2>
@@ -106,6 +103,7 @@ export async function getServerSideProps() {
         const times = await db
             .collection("times")
             .find({})
+            .sort({ createdAt: -1 })
             .toArray();
 
         return {
