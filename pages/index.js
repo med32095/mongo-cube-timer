@@ -2,7 +2,7 @@ import clientPromise from "../lib/mongodb.js";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Stopwatch from "../components/stopwatch";
-import { LineChart, Line } from 'recharts';
+import { LineChart, Line, Tooltip } from 'recharts';
 
 export default function Home({ times }) {
     const [time, setTime] = useState(null)
@@ -77,7 +77,8 @@ export default function Home({ times }) {
             <h1 className='text-7xl text-slate-800'>cube timer</h1>
             <div className='absolute top-0 left-0'>
                 <LineChart width={400} height={400} data={times}>
-                    <Line type="monotone" dataKey="time" stroke="#000000" />
+                    <Line type="monotone" dataKey="time" stroke="#475569" strokeWidth="3" dot={{ fill: '#94a3b8', stroke: '#94a3b8', strokeWidth: 4 }}/>
+                    <Tooltip />
                 </LineChart>
             </div>
             <Stopwatch inserter={insertTime}/>
