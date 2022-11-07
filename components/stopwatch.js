@@ -1,38 +1,29 @@
 import { useState } from "react"
 
 export default function Stopwatch() {
-    const [time, setTime] = useState(0);
-    const [status, setStatus] = useState(false);
-    const [readout, setReadout] = useState("0:00.00");
-    const [int, setInt] = useState(null);
-    let hs = 0
-    let sec = 0
-    let min = 0
+    const [newReadout, setNewReadout] = useState("0:00.000");
+    const [newInt, setNewInt] = useState(null);
+    const [newStatus, setNewStatus] = useState(false);
+    let myTime;
 
-    function handleClick() {
-        if (status) {
-            clearInterval(int)
-            setStatus(false)
+    function newHandleClick() {
+        if (newStatus) {
+            clearInterval(newInt)
+            setNewStatus(false)
         } else {
-            setStatus(true)
-            setInt(setInterval(startTimer, 10))
-            min = 0;
-            sec = 0;
-            hs = 0;
+            setNewStatus(true)
+            myTime = new Date()
+            setNewInt(setInterval(newStartTimer, 10))
         }
     }
 
-    function startTimer() {
-        hs++;
-        if (hs>99) {
-            hs = 0;
-            sec++;
-            if (sec>59) {
-                sec = 0;
-                min++;
-            }
-        }
-        setReadout(toReadout(min,sec,hs));
+    function newStartTimer() {
+        const d = new Date()
+        let currentTime = d.getTime()
+        let startTime = myTime.getTime()
+        let elapse = currentTime - startTime
+        console.log(elapse)
+        setNewReadout(String(elapse))
     }
 
     function toReadout(min,sec,hs) {
@@ -53,10 +44,10 @@ export default function Stopwatch() {
     return (
         <div className='flex flex-col gap-4 justify-between items-center border-4 border-slate-600 rounded-md p-4'>
             <div className='text-5xl text-slate-800 font-mono'>
-                {readout}
+                {newReadout}
             </div>
-            <button onClick={handleClick} className='bg-slate-600 rounded px-2 text-white w-full hover:bg-slate-800'>
-                START
+            <button onClick={newHandleClick} className='bg-slate-600 rounded px-2 text-white w-full hover:bg-slate-800'>
+                start
             </button>
         </div>
     )

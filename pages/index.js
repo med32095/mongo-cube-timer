@@ -85,7 +85,7 @@ export default function Home({ times }) {
                 <div>message: {message}</div>
                 <div>error: {error}</div>
             </div>
-            <h1 className='text-8xl text-slate-800'>cube timer</h1>
+            <h1 className='text-7xl text-slate-800'>cube timer</h1>
             <Stopwatch/>
             <div>
                 <form onSubmit={insertTime} ref={textInput} className='flex flex-col items-center gap-2'>
