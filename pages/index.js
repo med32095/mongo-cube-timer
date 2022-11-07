@@ -75,7 +75,7 @@ export default function Home({ times }) {
                 <div>error: {error}</div>
             </div> */}
             <h1 className='text-7xl text-slate-800'>cube timer</h1>
-            <div className='absolute top-0 left-0'>
+            <div className='absolute top-0 left-0 sm:hidden'>
                 <LineChart width={400} height={400} data={times}>
                     <Line type="monotone" dataKey="time" stroke="#475569" strokeWidth="3" dot={{ fill: '#94a3b8', stroke: '#94a3b8', strokeWidth: 4 }}/>
                     <Tooltip />
