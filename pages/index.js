@@ -40,7 +40,7 @@ export default function Component({ times }) {
 
         if (data.success) {
             // reset the fields
-            router.push(router.asPath);
+            getUserTimes(session.user.id);
             
             // set the message
             return setMessage(data.message);
@@ -64,7 +64,7 @@ export default function Component({ times }) {
             setDeleting(false);
 
             // reload the page
-            return router.push(router.asPath);
+            getUserTimes(session.user.id)
         } catch (error) {
             // stop deleting state
             return setDeleting(false);
@@ -73,53 +73,60 @@ export default function Component({ times }) {
 
     const getUserTimes = async (userID) => {
         try {
-            const res = await fetch(`/api/userTimes?id=${userID}`, {
+            const res = await fetch(`/api/userTimes?userID=${userID}`, {
                 method: 'GET',
             });
-            
-            res.json()
+            const data = await res.json()
+            setUserTimes(data)
         } catch (error) {
             // stop deleting state
             console.log(error)
         } 
     };
 
-    useEffect(() => {
+    useEffect(()=>{
         if (session) {
-            getUserTimes(session.user.id).then((data)=>{return setUserTimes(data)})
+            getUserTimes(session.user.id)
         }
-    }, [session])
-    
+    },[session])
+
     if(session) {
-        return (
-            <div className='flex justify-around gap-4 mt-3 sm:flex-col align-middle'>
-                <div className='self-center'>
-                    <Chart times={times} />
-                </div>
-                <div className='flex flex-col items-center gap-4 mt-3'>
-                    <h1 className='text-7xl text-slate-800'>cube timer</h1>
-                    <Stopwatch inserter={insertTime}/>
-                    
-                </div>
-                <div>
-                    <p>{session.user.name} </p>
-                    <p>{session.user.id}</p>
-                    <button onClick={() => signOut()}>Sign out</button>
+        if (userTimes) {
+            return (
+                <div className='flex justify-around gap-4 mt-3 sm:flex-col align-middle'>
+                    <div className='self-center'>
+                        <Chart times={userTimes} />
+                    </div>
+                    <div className='flex flex-col items-center gap-4 mt-3'>
+                        <h1 className='text-7xl text-slate-800'>cube timer</h1>
+                        <Stopwatch inserter={insertTime}/>
+                        
+                    </div>
                     <div>
-                    <ul className='p-1 gap-2 flex flex-col-reverse w-36'>
-                        {(userTimes?userTimes:times).map((times) => (
-                            (<li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
-                                <h2 className='font-mono'>{times.prettyTime}</h2>
-                                <button onClick={() => deleteTime(times._id)} className='text-white hidden group-hover:flex sm:flex'>
-                                    {deleting ? "..." : "x"}
-                                </button>
-                            </li>)
-                        ))}
-                    </ul>
+                        <p>{session.user.name} </p>
+                        <p>{session.user.id}</p>
+                        <button onClick={() => signOut()}>Sign out</button>
+                        <div>
+                        <ul className='p-1 gap-2 flex flex-col-reverse w-36'>
+                            {(userTimes).map((times) => (
+                                (<li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
+                                    <h2 className='font-mono'>{times.prettyTime}</h2>
+                                    <button onClick={() => deleteTime(times._id)} className='text-white hidden group-hover:flex sm:flex'>
+                                        {deleting ? "..." : "x"}
+                                    </button>
+                                </li>)
+                            ))}
+                        </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        } else {
+            return (
+                <div>loading</div>
+            )
+        }
+        
         
     }
     return <>
