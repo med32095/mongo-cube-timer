@@ -13,7 +13,6 @@ export default function Component({ times }) {
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
     const [deleting, setDeleting] = useState(false);
-    const router = useRouter();
     const { data: session } = useSession()
     const [userTimes, setUserTimes] = useState(null);
     
