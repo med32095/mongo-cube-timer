@@ -13,6 +13,14 @@ export const authOptions = {
     // ...add more providers here
   ],
   adapter: MongoDBAdapter(clientPromise),
+  callbacks: {
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token and user id from a provider.
+      session.user.id = user.id
+      
+      return session
+    }
+  }
 }
 
 export default NextAuth(authOptions)

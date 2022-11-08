@@ -1,11 +1,12 @@
 import clientPromise from "../lib/mongodb.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Stopwatch from "../components/stopwatch";
 import Chart from "../components/chart.js";
 import { ObjectID } from "bson";
 
 import { useSession, signIn, signOut } from "next-auth/react"
+
 
 export default function Component({ times }) {
     const [time, setTime] = useState(null)
@@ -14,7 +15,8 @@ export default function Component({ times }) {
     const [deleting, setDeleting] = useState(false);
     const router = useRouter();
     const { data: session } = useSession()
-
+    const [userTimes, setUserTimes] = useState(null);
+    
     const insertTime = async (elapse,readout) => {
         // reset error and message
         setError('');
@@ -25,6 +27,7 @@ export default function Component({ times }) {
             time: elapse,
             prettyTime: readout,
             createdAt: new Date().toISOString(),
+            userID: session.user.id
         };
         // save the time
         let response = await fetch('/api/insert', {
@@ -57,9 +60,6 @@ export default function Component({ times }) {
                 method: 'DELETE',
                 body: timeID,
             });
-            
-            let data = await res.json();
-
             // reset the deleting state
             setDeleting(false);
 
@@ -71,6 +71,25 @@ export default function Component({ times }) {
         }
     };
 
+    const getUserTimes = async (userID) => {
+        try {
+            const res = await fetch(`/api/userTimes?id=${userID}`, {
+                method: 'GET',
+            });
+            
+            res.json()
+        } catch (error) {
+            // stop deleting state
+            console.log(error)
+        } 
+    };
+
+    useEffect(() => {
+        if (session) {
+            getUserTimes(session.user.id).then((data)=>{return setUserTimes(data)})
+        }
+    }, [session])
+    
     if(session) {
         return (
             <div className='flex justify-around gap-4 mt-3 sm:flex-col align-middle'>
@@ -80,20 +99,24 @@ export default function Component({ times }) {
                 <div className='flex flex-col items-center gap-4 mt-3'>
                     <h1 className='text-7xl text-slate-800'>cube timer</h1>
                     <Stopwatch inserter={insertTime}/>
+                    
+                </div>
+                <div>
+                    <p>{session.user.name} </p>
+                    <p>{session.user.id}</p>
+                    <button onClick={() => signOut()}>Sign out</button>
+                    <div>
                     <ul className='p-1 gap-2 flex flex-col-reverse w-36'>
-                        {times.map((times) => (
-                            <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
+                        {(userTimes?userTimes:times).map((times) => (
+                            (<li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
                                 <h2 className='font-mono'>{times.prettyTime}</h2>
                                 <button onClick={() => deleteTime(times._id)} className='text-white hidden group-hover:flex sm:flex'>
                                     {deleting ? "..." : "x"}
                                 </button>
-                            </li>
+                            </li>)
                         ))}
                     </ul>
-                </div>
-                <div>
-                    <p>{session.user.name} </p>
-                    <button onClick={() => signOut()}>Sign out</button>
+                    </div>
                 </div>
             </div>
         )
