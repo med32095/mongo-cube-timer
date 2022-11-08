@@ -7,8 +7,6 @@ import { signOut } from "next-auth/react";
 export default function Timer({ session, userTimes, getUserTimes }) {
     const [deleting, setDeleting] = useState(false);
 
-
-
     const insertTime = async (elapse,readout) => {
     
         // entry structure
@@ -77,12 +75,12 @@ export default function Timer({ session, userTimes, getUserTimes }) {
                         <div>
                         <ul className='p-1 gap-2 flex flex-col-reverse w-36'>
                             {(userTimes).map((times) => (
-                                (<li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
+                                <li key={times._id}className='group flex gap-3 justify-between bg-slate-400 rounded px-3'>
                                     <h2 className='font-mono'>{times.prettyTime}</h2>
                                     <button onClick={() => deleteTime(times._id)} className='text-white hidden group-hover:flex sm:flex'>
                                         {deleting ? "..." : "x"}
                                     </button>
-                                </li>)
+                                </li>
                             ))}
                         </ul>
                         </div>

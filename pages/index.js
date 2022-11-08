@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react"
 import Timer from "../components/timer";
-import Link from "next/link";
 
 
 export default function Component() {
     const { data: session } = useSession()
     const [userTimes, setUserTimes] = useState(null);
+
     
     const getUserTimes = async (userID) => {
         try {
@@ -19,7 +19,6 @@ export default function Component() {
             //error handling 
         } 
     };
-    
 
     useEffect(()=>{
         if (session) {
