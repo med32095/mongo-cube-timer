@@ -1,9 +1,9 @@
-import { LineChart, Line, Tooltip } from 'recharts';
+import { LineChart, Line, Tooltip, YAxis } from 'recharts';
 
 export default function Chart({ times }) {
     return (
         <div>
-            <LineChart width={100} height={100} data={times}>
+            <LineChart width={250} height={150} data={times}>
                 <Line 
                     type="monotone"
                     dataKey="time"
@@ -12,6 +12,7 @@ export default function Chart({ times }) {
                     // dot={{ fill: '#94a3b8', stroke: '#94a3b8', strokeWidth: 4 }}
                     dot={false}
                 />
+                {/* <YAxis interval="preserveStartEnd" stroke='#1e293b'/> */}
                 <Tooltip />
             </LineChart>
         </div>
