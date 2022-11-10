@@ -17,7 +17,7 @@ export default function NewTimer({ session }) {
                 <ul>
                     {data?.map((time) => (
                     <li key={time._id}>
-                        {time.prettyTime} : {time.userID} : {time.createdAt}
+                        {time.prettyTime}
                     </li>
                     ))}
                 </ul>
