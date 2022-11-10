@@ -1,23 +1,54 @@
 import { useState } from "react"
 
-export default function Stopwatch({ inserter }) {
+import { useMutation, useQueryClient } from "react-query";
+import axios from "axios";
+
+export default function Stopwatch({ session }) {
     const [newReadout, setNewReadout] = useState("0:00.000");
     const [newInt, setNewInt] = useState(null);
     const [newStatus, setNewStatus] = useState(false);
     const [time, setTime] = useState(0);
-    let myTime;
 
-    function newHandleClick() {
+    const queryClient = useQueryClient()
+
+    const mutation = useMutation(newTime => {
+        return axios.post('/api/insert', newTime)
+      })
+
+    let myTime;
+    
+    function handleClick() {
+        //e prevent default in here?
         if (newStatus) {
             clearInterval(newInt)
             setNewStatus(false)
-            inserter(time,newReadout)
+    
+            let entry = {
+                time: time,
+                prettyTime: newReadout,
+                createdAt: new Date().toISOString(),
+                userID: session.user.id
+            };
+    
+            mutation.mutate(entry)
         } else {
             setNewStatus(true)
             myTime = new Date()
             setNewInt(setInterval(newStartTimer, 10))
         }
     }
+
+    // function newHandleClick() {
+    //     if (newStatus) {
+    //         clearInterval(newInt)
+    //         setNewStatus(false)
+    //         inserter(time,newReadout)
+    //     } else {
+    //         setNewStatus(true)
+    //         myTime = new Date()
+    //         setNewInt(setInterval(newStartTimer, 10))
+    //     }
+    // }
 
     function newStartTimer() {
         const d = new Date()
@@ -56,7 +87,8 @@ export default function Stopwatch({ inserter }) {
             <div className='text-5xl text-slate-800 font-mono'>
                 {newReadout}
             </div>
-            <button onClick={newHandleClick} className='bg-slate-600 rounded px-2 text-white w-full hover:bg-slate-800 text-5xl flex justify-around py-6'>
+
+            <button onClick={handleClick} className='bg-slate-600 rounded px-2 text-white w-full hover:bg-slate-800 text-5xl flex justify-around py-6'>
                 {newStatus ? "stop" : "start"}
             </button>
         </div>

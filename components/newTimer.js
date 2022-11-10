@@ -1,5 +1,6 @@
 import { useTimes } from "../hooks/useTimes";
 import Chart from "./chart";
+import Stopwatch from "./stopwatch";
 
 export default function NewTimer({ session }) {
 
@@ -11,7 +12,8 @@ export default function NewTimer({ session }) {
     
         return (
             <section>
-                <Chart times={data}/>
+                <Chart times={data} />
+                <Stopwatch session={session} />
                 <ul>
                     {data?.map((time) => (
                     <li key={time._id}>

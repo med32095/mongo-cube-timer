@@ -6,7 +6,7 @@ export default async (req, res) => {
         const client = await clientPromise;
         const db = client.db("cuber");
         // add the time
-        await db.collection('times').insertOne(JSON.parse(req.body));
+        await db.collection('times').insertOne(req.body);
         // return a message
         return res.json({
             message: 'time added successfully',
