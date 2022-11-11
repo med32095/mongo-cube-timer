@@ -21,9 +21,9 @@ export default function UserStats({ session }) {
     return (
         <div>
             <Chart times={data}/>
-            <ul>
+            <ul className='flex flex-col items-center'>
                 {data?.map((time) => (
-                    <li key={time._id} className='font-mono flex gap-2'>
+                    <li key={time._id} className='font-mono flex gap-4'>
                         {time.prettyTime}
                         <button onClick={() => deleteMutation.mutate(time._id)}>
                             x

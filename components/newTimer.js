@@ -6,9 +6,13 @@ export default function NewTimer({ session }) {
     if (session) {
     
         return (
-            <section className='p-3'>
-                <Stopwatch session={session} />
-                <UserStats session={session}/>
+            <section className='p-3 flex flex-col items-center'>
+                <div>
+                    <Stopwatch session={session} />
+                </div>
+                <div className='flex flex-col items-center'>
+                    <UserStats session={session}/>
+                </div>
             </section>
         )
     }

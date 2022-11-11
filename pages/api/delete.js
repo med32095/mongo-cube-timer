@@ -10,7 +10,6 @@ export default async (req, res) => {
         await db.collection('times').deleteOne({
             _id: new ObjectId(req.body),
         });
-        console.log("here")
         // returning a message
         return res.json({
             message: 'time deleted successfully',
