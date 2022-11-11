@@ -20,7 +20,9 @@ export default function UserStats({ session }) {
 
     return (
         <div>
-            <Chart times={data}/>
+            <div className='py-5'>
+                <Chart times={data}/>
+            </div>
             <ul className='flex flex-col items-center'>
                 {data?.map((time) => (
                     <li key={time._id} className='font-mono flex gap-4'>

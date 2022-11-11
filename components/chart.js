@@ -1,4 +1,4 @@
-import { LineChart, Line, Tooltip, YAxis } from 'recharts';
+import { LineChart, Line, Tooltip, YAxis, XAxis } from 'recharts';
 
 export default function Chart({ times }) {
     return (
@@ -13,6 +13,7 @@ export default function Chart({ times }) {
                     dot={false}
                 />
                 {/* <YAxis interval="preserveStartEnd" stroke='#1e293b'/> */}
+                <XAxis reversed={true} hide={true}/>
                 <YAxis domain={['dataMin', 'dataMax']} interval="preserveStartEnd" hide={true} />
                 <Tooltip />
             </LineChart>
