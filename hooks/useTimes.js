@@ -2,13 +2,13 @@ import axios from 'axios'
 import { useQuery } from 'react-query'
 
 const fetchTimes = async (userID ) => {
-  const parsed = await axios(`/api/userTimes?userID=${userID}`)
+  const res = await axios(`/api/userTimes?userID=${userID}`)
 //   const result = parsed.filter(x => x.id <= limit)
-  return parsed.data
+  return res.data
 }
 
 const useTimes = userID => {
-  return useQuery(['times', userID], () => fetchTimes(userID))
+  return useQuery(['times', userID], async () => await fetchTimes(userID))
 }
 
 export { useTimes, fetchTimes }

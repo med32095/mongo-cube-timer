@@ -12,11 +12,10 @@ export default function Stopwatch({ session }) {
     const queryClient = useQueryClient()
 
     const mutation = useMutation(
-        newTime => {axios.post('/api/insert', newTime)},
+        async newTime => await axios.post('/api/insert', newTime),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries(['times', session.user.id])
-                // setNewReadout(newTime.prettyTime)
             }
         }
     )
