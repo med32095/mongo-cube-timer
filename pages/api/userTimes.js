@@ -10,6 +10,7 @@ export default async (req, res) => {
             .collection("times")
             // .find({ userID: "6369777b177774cec0ac8865" })
             .find({ userID: {$eq:userID}})
+            .sort({ createdAt: -1 })
             .toArray();
 
         return res.json(times)
