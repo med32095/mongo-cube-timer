@@ -1,8 +1,4 @@
-import { useEffect, useState } from "react";
 import { useSession, signIn } from "next-auth/react"
-import Timer from "../components/timer";
-
-import { useTimes } from "../hooks/useTimes";
 import NewTimer from "../components/newTimer";
 
 export default function Component() {
@@ -13,43 +9,7 @@ export default function Component() {
             <NewTimer session={session} />
         )
     }
-
-    // const [userTimes, setUserTimes] = useState(null);
-
     
-    // const getUserTimes = async (userID) => {
-    //     try {
-    //         const res = await fetch(`/api/userTimes?userID=${userID}`, {
-    //             method: 'GET',
-    //         });
-    //         const data = await res.json()
-    //         setUserTimes(data)
-    //     } catch (error) {
-    //         //error handling 
-    //     } 
-    // };
-
-    // useEffect(()=>{
-    //     if (session) {
-    //         getUserTimes(session.user.id)
-    //     }
-    // },[session])
-
-    // if(session) {
-    //     if (userTimes) {
-    //         return (
-    //             <Timer
-    //                 session={session}
-    //                 userTimes={userTimes}
-    //                 getUserTimes={getUserTimes}
-    //             />
-    //         )
-    //     } else {
-    //         return (
-    //             <div>loading {session.user.name}'s times</div>
-    //         )
-    //     }
-    // }
     return (
         <div className='flex justify-center m-5'>
             <div className="flex flex-col gap-3 p-3 border-4 rounded-md border-slate-600 w-auto">
