@@ -13,6 +13,7 @@ export default function Chart({ times }) {
                     dot={false}
                 />
                 {/* <YAxis interval="preserveStartEnd" stroke='#1e293b'/> */}
+                <YAxis domain={['dataMin', 'dataMax']} interval="preserveStartEnd" hide={true} />
                 <Tooltip />
             </LineChart>
         </div>
