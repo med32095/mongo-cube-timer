@@ -72,13 +72,13 @@ export default function UserStats({ session }) {
             </table>
             <div className='font-mono'>
                 <div>
-                    Count : {data.length}
+                    Min : {data ? pretify(Math.min(...(statistics(data)))) : "-"}
                 </div>
                 <div>
-                    Min : {pretify(Math.min(...(statistics(data))))}
+                    Max : {data ? pretify(Math.max(...(statistics(data)))) : "-"}
                 </div>
                 <div>
-                    Min : {pretify(Math.max(...(statistics(data))))}
+                    Count : {data? data.length : "-"}
                 </div>
             </div>
             <div className='py-5'>
