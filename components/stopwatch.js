@@ -4,9 +4,9 @@ import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 
 export default function Stopwatch({ session }) {
-    const [newReadout, setNewReadout] = useState("0:00.000");
-    const [newInt, setNewInt] = useState(null);
-    const [newStatus, setNewStatus] = useState(false);
+    const [readout, setReadout] = useState("0:00.000");
+    const [int, setInt] = useState(null);
+    const [status, setStatus] = useState(false);
     const [time, setTime] = useState(0);
 
     const queryClient = useQueryClient()
@@ -25,43 +25,31 @@ export default function Stopwatch({ session }) {
     
     function handleClick() {
         //e prevent default in here?
-        if (newStatus) {
-            clearInterval(newInt)
-            setNewStatus(false)
+        if (status) {
+            clearInterval(int)
+            setStatus(false)
     
             let entry = {
                 time: time,
-                prettyTime: newReadout,
+                prettyTime: readout,
                 createdAt: new Date().toISOString(),
                 userID: session.user.id
             };
     
             mutation.mutate(entry)
         } else {
-            setNewStatus(true)
+            setStatus(true)
             myTime = new Date()
-            setNewInt(setInterval(newStartTimer, 10))
+            setInt(setInterval(startTimer, 10))
         }
     }
 
-    // function newHandleClick() {
-    //     if (newStatus) {
-    //         clearInterval(newInt)
-    //         setNewStatus(false)
-    //         inserter(time,newReadout)
-    //     } else {
-    //         setNewStatus(true)
-    //         myTime = new Date()
-    //         setNewInt(setInterval(newStartTimer, 10))
-    //     }
-    // }
-
-    function newStartTimer() {
+    function startTimer() {
         const d = new Date()
         let currentTime = d.getTime()
         let startTime = myTime.getTime()
         let elapse = currentTime - startTime
-        setNewReadout(toReadout(elapse))
+        setReadout(toReadout(elapse))
         setTime(elapse)
     }
 
@@ -91,11 +79,11 @@ export default function Stopwatch({ session }) {
     return (
         <div className='flex flex-col gap-4 justify-between items-center border-4 border-slate-600 rounded-md p-4'>
             <div className='text-5xl text-slate-800 font-mono'>
-                {newReadout}
+                {readout}
             </div>
 
             <button onClick={handleClick} className='bg-slate-600 rounded px-2 text-white w-full hover:bg-slate-800 text-5xl flex justify-around py-6'>
-                {newStatus ? "stop" : "start"}
+                {status ? "stop" : "start"}
             </button>
         </div>
     )

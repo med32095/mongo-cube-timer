@@ -15,7 +15,7 @@ export default function Chart({ times }) {
                 {/* <YAxis interval="preserveStartEnd" stroke='#1e293b'/> */}
                 <XAxis reversed={true} hide={true}/>
                 <YAxis domain={['dataMin', 'dataMax']} interval="preserveStartEnd" hide={true} />
-                <Tooltip />
+                {/* <Tooltip /> */}
             </LineChart>
         </div>
     )

@@ -1,12 +1,12 @@
 import { useSession, signIn } from "next-auth/react"
-import NewTimer from "../components/newTimer";
+import Timer from "../components/timer";
 
 export default function Component() {
     const { data: session } = useSession()
 
     if (session) {
         return (
-            <NewTimer session={session} />
+            <Timer session={session} />
         )
     }
     
