@@ -82,7 +82,7 @@ export default function Stopwatch({ session }) {
                 {readout}
             </div>
 
-            <button onClick={handleClick} className='bg-slate-600 rounded px-2 text-white w-full hover:bg-slate-800 text-5xl flex justify-around py-6'>
+            <button onClick={handleClick} className='bg-slate-600 rounded px-2 text-slate-300 w-full hover:bg-slate-800 text-5xl flex justify-around py-6'>
                 {status ? "stop" : "start"}
             </button>
         </div>
