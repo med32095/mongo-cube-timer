@@ -70,15 +70,9 @@ export default function UserStats({ session }) {
                     ))}
                 </tbody>
             </table>
-            <div className='font-mono'>
+            <div className='font-mono items-center flex flex-col text-slate-800'>
                 <div>
-                    Min : {data ? pretify(Math.min(...(statistics(data)))) : "-"}
-                </div>
-                <div>
-                    Max : {data ? pretify(Math.max(...(statistics(data)))) : "-"}
-                </div>
-                <div>
-                    Count : {data? data.length : "-"}
+                    {data? data.length : "-"} : {data ? pretify(Math.min(...(statistics(data)))) : "-"} : {data ? pretify(Math.max(...(statistics(data)))) : "-"}
                 </div>
             </div>
             <div className='py-5'>
