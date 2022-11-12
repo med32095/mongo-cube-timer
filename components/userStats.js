@@ -3,7 +3,7 @@ import { useTimes } from "../hooks/useTimes.js";
 
 import { useMutation, useQueryClient } from "react-query";
 
-function statistics(data) {
+function timeArray(data) {
     let times = []
     data.map(time => {
         times.push(time.time)
@@ -32,6 +32,18 @@ function pretify(time) {
     }
     
     return `${_min}:${_sec}.${_ms}`
+}
+
+function statReadout(data) {
+    let len = data.length
+    let min = pretify(Math.min(...(timeArray(data))))
+    let max = pretify(Math.max(...(timeArray(data))))
+
+    if (len<1) {
+        return "log some times for stats"
+    }
+    
+    return (`${len} : ${min} : ${max}`)
 }
 
 export default function UserStats({ session }) {
@@ -72,7 +84,7 @@ export default function UserStats({ session }) {
             </table>
             <div className='font-mono items-center flex flex-col text-slate-800'>
                 <div>
-                    {data? data.length : "-"} : {data ? pretify(Math.min(...(statistics(data)))) : "-"} : {data ? pretify(Math.max(...(statistics(data)))) : "-"}
+                    {data? statReadout(data) : "no user data"}
                 </div>
             </div>
             <div className='py-5'>
