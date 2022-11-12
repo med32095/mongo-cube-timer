@@ -78,11 +78,11 @@ export default function Stopwatch({ session }) {
 
     return (
         <div className='flex flex-col gap-4 justify-between items-center border-4 border-slate-600 rounded-md p-4'>
-            <div className='text-5xl text-slate-800 font-mono'>
+            <div className='text-5xl text-slate-800 font-mono sm:text-2xl'>
                 {readout}
             </div>
 
-            <button onClick={handleClick} className='bg-slate-600 rounded px-2 text-slate-300 w-full hover:bg-slate-800 text-5xl flex justify-around py-6'>
+            <button onClick={handleClick} className='bg-slate-600 rounded px-2 text-slate-300 w-full hover:bg-slate-800 text-5xl sm:text-2xl flex justify-around py-6 sm:py-2'>
                 {status ? "stop" : "start"}
             </button>
         </div>
