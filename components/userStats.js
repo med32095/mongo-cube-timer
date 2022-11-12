@@ -28,9 +28,9 @@ export default function UserStats({ session }) {
                         <th className='text-center text-slate-500'>{data?.length < 1 ? 'no times in system' : "(click a time to delete it)"}</th>
                     </tr>
                 </thead>
-                <tbody className='overflow-y-auto'>
+                <tbody className='overflow-y-auto max-h-60'>
                     {data?.map((time) => (
-                        <tr key={time._id} className='font-mono flex gap-4'>
+                        <tr key={time._id} className='font-mono flex gap-4 mr-2'>
                             <td className='text-center rounded-full bg-slate-300 px-2 mb-1'>
                                 <button onClick={() => deleteMutation.mutate(time._id)}>
                                     {time.prettyTime}

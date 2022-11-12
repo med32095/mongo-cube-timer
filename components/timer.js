@@ -1,6 +1,9 @@
 import Stopwatch from "./stopwatch";
 import UserStats from "./userStats";
 
+
+
+
 export default function NewTimer({ session }) {
 
     if (session) {
@@ -22,3 +25,4 @@ export default function NewTimer({ session }) {
         </div>
     )
 }
+
