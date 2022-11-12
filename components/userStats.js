@@ -73,7 +73,7 @@ export default function UserStats({ session }) {
                 <tbody className='overflow-y-auto h-60 sm:h-40'>
                     {data?.map((time) => (
                         <tr key={time._id} className='font-mono flex gap-4 mr-2'>
-                            <td className='text-center rounded-full bg-slate-300 px-2 mb-1'>
+                            <td className='text-center rounded-full bg-slate-300 px-2 mb-1 hover:bg-slate-400'>
                                 <button onClick={() => deleteMutation.mutate(time._id)}>
                                     {time.prettyTime}
                                 </button>
