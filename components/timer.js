@@ -13,7 +13,7 @@ export default function NewTimer({ session }) {
                 <div className='flex flex-col items-center'>
                     <UserStats session={session}/>
                 </div>
-                <div className='mt-3'>
+                <div className='mt-3 w-full'>
                     <Stopwatch session={session} />
                 </div>
             </section>
