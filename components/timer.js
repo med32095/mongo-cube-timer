@@ -9,7 +9,7 @@ export default function NewTimer({ session }) {
     if (session) {
     
         return (
-            <section className='p-3 flex flex-col items-center min-h-screen justify-between'>
+            <section className='p-3 flex flex-col items-center min-h-[90vh] justify-between'>
                 <div className='flex flex-col items-center flex-1'>
                     <UserStats session={session}/>
                 </div>
