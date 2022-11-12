@@ -18,7 +18,7 @@ export default function UserStats({ session }) {
       })
 
     return (
-        <div className='flex flex-col justify-between flex-1'>
+        <div className='flex flex-col flex-1'>
             <table className='table-auto items-center flex flex-col rounded-md bg-slate-600 p-3'>
                 <thead className='mb-4'>
                     <tr>

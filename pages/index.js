@@ -6,7 +6,7 @@ export default function Component() {
 
     if (session) {
         return (
-            <div className='min-h-screen'>
+            <div className='min-h-screen overflow-x-hidden'>
                 <Timer session={session} />
             </div>
         )

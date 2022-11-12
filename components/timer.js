@@ -9,8 +9,8 @@ export default function NewTimer({ session }) {
     if (session) {
     
         return (
-            <section className='p-3 flex flex-col items-center min-h-[90vh] justify-between'>
-                <div className='flex flex-col items-center flex-1'>
+            <section className='p-3 flex flex-col items-center min-h-[90vh]'>
+                <div className='flex flex-col items-center'>
                     <UserStats session={session}/>
                 </div>
                 <div className='mt-3'>
