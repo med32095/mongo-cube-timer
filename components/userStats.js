@@ -18,12 +18,7 @@ export default function UserStats({ session }) {
       })
 
     return (
-        <div className='overflow-y-auto'>
-            <div>{console.log(data?.length)}</div>
-            <div className='py-5'>
-                <Chart times={data}/>
-            </div>
-            {/* <ul className='flex flex-col items-center'> */}
+        <div className='flex flex-col justify-between flex-1'>
             <table className='table-auto items-center flex flex-col rounded-md bg-slate-600 p-3'>
                 <thead className='mb-4'>
                     <tr>
@@ -45,7 +40,9 @@ export default function UserStats({ session }) {
                     ))}
                 </tbody>
             </table> 
-            {/* </ul> */}
+            <div className='py-5'>
+                <Chart times={data}/>
+            </div>
         </div>
     );
 };

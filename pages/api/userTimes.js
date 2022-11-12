@@ -8,9 +8,8 @@ export default async (req, res) => {
 
         const times = await db
             .collection("times")
-            // .find({ userID: "6369777b177774cec0ac8865" })
             .find({ userID: {$eq:userID}})
-            .sort({ createdAt: -1 })
+            // .sort({ createdAt: -1 })
             .toArray();
 
         return res.json(times)
