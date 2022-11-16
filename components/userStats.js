@@ -2,6 +2,7 @@ import Chart from "./chart";
 import { useTimes } from "../hooks/useTimes.js";
 
 import { useMutation, useQueryClient } from "react-query";
+import axios from "axios";
 
 function timeArray(data) {
     let times = []
@@ -59,6 +60,15 @@ export default function UserStats({ session }) {
         onSuccess: () => queryClient.invalidateQueries(['times', session.user.id]),
       })
 
+      const deleteAllMutation = useMutation(
+        async () => await fetch(`/api/deleteAll?userID=${session.user.id}`),
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries(['times', session.user.id])
+            }
+        }
+    )
+
     return (
         <div className='flex flex-col flex-1'>
             <table className='table-auto items-center flex flex-col rounded-md bg-slate-600 p-3'>
@@ -85,6 +95,11 @@ export default function UserStats({ session }) {
             <div className='font-mono items-center flex flex-col text-slate-800'>
                 <div>
                     {data? statReadout(data) : "no user data"}
+                </div>
+                <div>
+                    <button onClick={() => deleteAllMutation.mutate(session.user.id)}>
+                        delete all
+                    </button>
                 </div>
             </div>
             <div className='py-5'>
