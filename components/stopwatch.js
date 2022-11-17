@@ -85,9 +85,20 @@ export default function Stopwatch({ session }) {
                 handleClick()
             }
         };
+
+        const clickHandler = event => {
+            if (status) {
+                handleClick()
+            }
+        }
     
         document.addEventListener('keyup', keyUpHandler);
-        return () => document.removeEventListener('keyup', keyUpHandler);
+        document.addEventListener('mousedown', clickHandler);
+
+        return () => {
+            document.removeEventListener('keyup', keyUpHandler);
+            document.removeEventListener('mousedown', clickHandler)
+        }
 
         
       }, [status]);
