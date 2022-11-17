@@ -39,12 +39,14 @@ function statReadout(data) {
     let len = data.length
     let min = pretify(Math.min(...(timeArray(data))))
     let max = pretify(Math.max(...(timeArray(data))))
-
+    let sum = timeArray(data).reduce((a, b) => a + b, 0)
+    let avg = pretify(Math.floor(sum/len))
+    
     if (len<1) {
         return "log some times for stats"
     }
     
-    return (`${len} : ${min} : ${max}`)
+    return (`${len} : ${min} : ${avg} : ${max}`)
 }
 
 export default function UserStats({ session }) {
