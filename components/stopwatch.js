@@ -101,7 +101,7 @@ export default function Stopwatch({ session }) {
         }
 
         
-      }, [status]);
+      }, [status, int, readout, time]);
 
     return (
         <div className='flex flex-col gap-4 justify-between items-center border-4 border-slate-600 rounded-md p-4'>
