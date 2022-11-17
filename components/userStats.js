@@ -69,6 +69,12 @@ export default function UserStats({ session }) {
         }
     )
 
+    function handleDeleteAll() {
+        if (confirm("delete all???")) {
+            deleteAllMutation.mutate(session.user.id)
+        }
+    }
+
     return (
         <div className='flex flex-col flex-1'>
             <table className='table-auto items-center flex flex-col rounded-md bg-slate-600 p-3'>
@@ -97,7 +103,7 @@ export default function UserStats({ session }) {
                     {data? statReadout(data) : "no user data"}
                 </div>
                 <div>
-                    <button onClick={() => deleteAllMutation.mutate(session.user.id)}>
+                    <button onClick={() => handleDeleteAll()}>
                         delete all
                     </button>
                 </div>
