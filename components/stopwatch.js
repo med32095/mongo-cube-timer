@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
@@ -75,13 +75,28 @@ export default function Stopwatch({ session }) {
         
         return `${_min}:${_sec}.${_ms}`
     }
+    // needs to be in useeffect??? https://bobbyhadz.com/blog/react-detect-enter-key-press
+    useEffect(() => {
+        const keyUpHandler = event => {
+            event.preventDefault();
+    
+            if (event.keyCode === 32) {
+            // 👇️ your logic here
+                handleClick()
+            }
+        };
+    
+        document.addEventListener('keyup', keyUpHandler);
+        return () => document.removeEventListener('keyup', keyUpHandler);
+
+        
+      }, [status]);
 
     return (
         <div className='flex flex-col gap-4 justify-between items-center border-4 border-slate-600 rounded-md p-4'>
             <div className='text-5xl text-slate-800 font-mono sm:text-2xl'>
                 {readout}
             </div>
-
             <button onClick={handleClick} className='bg-slate-600 rounded px-2 text-slate-300 w-full hover:bg-slate-800 text-5xl sm:text-2xl flex justify-around py-6 sm:py-2'>
                 {status ? "stop" : "start"}
             </button>
