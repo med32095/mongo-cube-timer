@@ -41,12 +41,37 @@ function statReadout(data) {
     let max = pretify(Math.max(...(timeArray(data))))
     let sum = timeArray(data).reduce((a, b) => a + b, 0)
     let avg = pretify(Math.floor(sum/len))
-    
+
     if (len<1) {
         return "log some times for stats"
     }
     
     return (`${len} : ${min} : ${avg} : ${max}`)
+}
+
+function bestOfReadout(data) {
+    let lastFive = timeArray(data).slice(0,5)
+    let sum5 = lastFive.reduce((a, b) => a + b, 0)
+    let min5 = Math.min(...lastFive)
+    let max5 = Math.max(...lastFive)
+    let middleSum5 = sum5 - min5 - max5
+    let avgFive = pretify(Math.floor(middleSum5/3))
+
+    let last12 = timeArray(data).slice(0,12)
+    let sum12 = last12.reduce((a, b) => a + b, 0)
+    let min12 = Math.min(...last12)
+    let max12 = Math.max(...last12)
+    let middleSum12 = sum12 - min12 - max12
+    let avg12 = pretify(Math.floor(middleSum12/10))
+    
+    let len = data.length
+    if (len<5) {
+        return (`avg5 n/a | avg12 n/a`)
+    } else if (len<12) {
+        return (`avg5 ${avgFive} | avg12 n/a`)
+    } else {
+        return (`avg5 ${avgFive} | avg12 ${avg12}`)
+    }
 }
 
 export default function UserStats({ session }) {
@@ -103,6 +128,9 @@ export default function UserStats({ session }) {
             <div className='font-mono items-center flex flex-col text-slate-800'>
                 <div>
                     {data? statReadout(data) : "no user data"}
+                </div>
+                <div>
+                    {data? bestOfReadout(data) : "no user data"}
                 </div>
                 <div>
                     <button onClick={() => handleDeleteAll()}>
