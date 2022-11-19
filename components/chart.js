@@ -3,7 +3,7 @@ import { LineChart, Line, Tooltip, YAxis, XAxis } from 'recharts';
 export default function Chart({ times }) {
     return (
         <div>
-            <LineChart width={250} height={100} data={times}>
+            <LineChart width={350} height={100} data={times}>
                 <Line 
                     type="monotone"
                     dataKey="time"
