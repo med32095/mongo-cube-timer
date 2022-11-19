@@ -49,13 +49,13 @@ function statReadout(data) {
     return (`${len} | ${min} | ${avg} | ${max}`)
 }
 
-function bestOfReadout(data) {
-    let lastFive = timeArray(data).slice(0,5)
-    let sum5 = lastFive.reduce((a, b) => a + b, 0)
-    let min5 = Math.min(...lastFive)
-    let max5 = Math.max(...lastFive)
+function avg5TwelveReadout(data) {
+    let last5 = timeArray(data).slice(0,5)
+    let sum5 = last5.reduce((a, b) => a + b, 0)
+    let min5 = Math.min(...last5)
+    let max5 = Math.max(...last5)
     let middleSum5 = sum5 - min5 - max5
-    let avgFive = pretify(Math.floor(middleSum5/3))
+    let avg5 = pretify(Math.floor(middleSum5/3))
 
     let last12 = timeArray(data).slice(0,12)
     let sum12 = last12.reduce((a, b) => a + b, 0)
@@ -68,14 +68,68 @@ function bestOfReadout(data) {
     if (len<5) {
         return (`avg5 n/a | avg12 n/a`)
     } else if (len<12) {
-        return (`avg5 ${avgFive} | avg12 n/a`)
+        return (`avg5 ${avg5} | avg12 n/a`)
     } else {
-        return (`avg5 ${avgFive} | avg12 ${avg12}`)
+        return (`avg5 ${avg5} | avg12 ${avg12}`)
+    }
+}
+
+function bestFiveTwelveReadout(data) {
+    function getAvg5(timeArray) {
+        let sum5 = timeArray.reduce((a, b) => a + b, 0)
+        let min5 = Math.min(...timeArray)
+        let max5 = Math.max(...timeArray)
+        let middleSum5 = sum5 - min5 - max5
+        let avg5 = Math.floor(middleSum5/3)
+        return avg5
+    }
+    
+    function getAvg12(timeArray) {
+        let sum12 = timeArray.reduce((a, b) => a + b, 0)
+        let min12 = Math.min(...timeArray)
+        let max12 = Math.max(...timeArray)
+        let middleSum12 = sum12 - min12 - max12
+        let avg12 = Math.floor(middleSum12/10)
+        return avg12
+    }
+
+    let len = data.length
+
+    let last5 = timeArray(data).slice(0,5)
+    let last12 = timeArray(data).slice(0,12)
+
+    function bestAvgFive(data) {
+        let averages = []
+        let len = data.length
+        for (let i = 0; i < (len-4); i++) {
+            let currentSlice = timeArray(data).slice(i,(i+5))
+            averages.push(getAvg5(currentSlice));
+        }
+        return pretify(Math.min(...averages))
+    }
+
+    function bestAvgTwelve(data) {
+        let averages = []
+        let len = data.length
+        for (let i = 0; i < (len-11); i++) {
+            let currentSlice = timeArray(data).slice(i,(i+12))
+            averages.push(getAvg12(currentSlice));
+        }
+        return pretify(Math.min(...averages))
+    }
+
+    
+    if (len<5) {
+        return (`bestAvg5 n/a | bestAvg12 n/a`)
+    } else if (len<12) {
+        return (`bestAvg5 ${bestAvgFive(data)} | bestAvg12 n/a`)
+    } else {
+        return (`bestAvg5 ${bestAvgFive(data)} | bestAvg12 ${bestAvgTwelve(data)}`)
     }
 }
 
 export default function UserStats({ session }) {
-    const { data, isLoading, isFetching } = useTimes(session.user.id);
+    const { data } = useTimes(session.user.id);
     const queryClient = useQueryClient()
 
     const deleteMutation = useMutation(
@@ -97,7 +151,7 @@ export default function UserStats({ session }) {
     )
 
     function handleDeleteAll() {
-        if (confirm("delete all???")) {
+        if (confirm("delete all??")) {
             deleteAllMutation.mutate(session.user.id)
         }
     }
@@ -130,7 +184,10 @@ export default function UserStats({ session }) {
                     {data? statReadout(data) : "no user data"}
                 </div>
                 <div>
-                    {data? bestOfReadout(data) : "no user data"}
+                    {data? avg5TwelveReadout(data) : "no user data"}
+                </div>
+                <div>
+                    {data? bestFiveTwelveReadout(data) : "no user data"}
                 </div>
                 <div>
                     <button onClick={() => handleDeleteAll()}>
