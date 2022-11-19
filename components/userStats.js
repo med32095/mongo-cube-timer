@@ -46,7 +46,7 @@ function statReadout(data) {
         return "log some times for stats"
     }
     
-    return (`${len} : ${min} : ${avg} : ${max}`)
+    return (`${len} | ${min} | ${avg} | ${max}`)
 }
 
 function bestOfReadout(data) {
